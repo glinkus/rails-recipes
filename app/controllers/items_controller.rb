@@ -1,3 +1,5 @@
+require 'prometheus_exporter/metric'
+
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[ show edit update destroy ]
 
@@ -57,6 +59,19 @@ class ItemsController < ApplicationController
     end
   end
 
+  def index
+    ITEMS_COUNTER.observe(1)
+
+    start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    @items = Item.all
+    duration = Process.clock_gettime(Process::CLOCK_MONOTONIC) - start
+
+    ITEMS_HISTOGRAM.observe(duration)
+
+    render json: @items
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_item
@@ -68,3 +83,4 @@ class ItemsController < ApplicationController
       params.expect(item: [ :title, :description ])
     end
 end
+
