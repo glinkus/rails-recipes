@@ -1,24 +1,31 @@
-# README
+# Recipe Tracker
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A small Rails project built to learn Ruby, Rails, Prometheus and Grafana.
 
-Things you may want to cover:
+## Features
+- CRUD for recipes  
+- Seed data for quick demo  
+- Prometheus `/metrics` endpoint  
+- Custom metric that counts created recipes  
+- Docker setup for Prometheus and Grafana
 
-* Ruby version
+## Setup
+```bash
+bundle install
+rails db:create db:migrate db:seed
+rails server
+```
+App runs at: http://localhost:3000
 
-* System dependencies
+## Metrics
+```bash
+docker compose up -d
+```
+Prometheus: http://localhost:9090
+Grafana: http://localhost:3001
 
-* Configuration
+## Seeds
+```bash
+rails db:seed
+```
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...

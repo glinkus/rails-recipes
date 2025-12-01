@@ -1,0 +1,20 @@
+groups:
+  - name: rails-app-alerts
+    rules:
+      - alert: CollectorDown
+        expr: collector_working == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Collector is not working"
+          description: "collector_working has been 0 for more than 2 minutes."
+
+      - alert: HighCollectorMemory
+        expr: collector_rss/(1024*1024) > 100
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Collector memory usage is high"
+          description: "collector_rss has been above 100 MB for 5 minutes."
